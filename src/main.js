@@ -8,17 +8,34 @@ const aspectRatio = window.innerWidth / window.innerHeight
 const scene = new THREE.Scene();
 
 // Adding objects to the scene
-const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
-const cubeMaterial = new THREE.MeshBasicMaterial({color: "red"});
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+const cubeMaterial = new THREE.MeshBasicMaterial({color: "lightblue"});
 
-const cubeMesh = new THREE.Mesh(
-  cubeGeometry,
-  cubeMaterial
-);
-scene.add(cubeMesh);
+// Initialize 3 cubes
+const cubeMesh = new THREE.Mesh( cubeGeometry, cubeMaterial);
+const cubeMesh2 = new THREE.Mesh( cubeGeometry, cubeMaterial);
+const cubeMesh3 = new THREE.Mesh( cubeGeometry, cubeMaterial);
 
-//console.log(scene);
+// Add single object to scene
+// scene.add(cubeMesh);
 
+const group = new THREE.Group();
+group.add(cubeMesh)
+group.add(cubeMesh2)
+group.add(cubeMesh3)
+
+// Add grouped objects to scene
+scene.add(group);
+
+// Position the cubes
+const tempVector = new THREE.Vector3(0, 0, 0)
+
+cubeMesh.position.copy(new THREE.Vector3(2, 0, 0))
+cubeMesh2.position.copy(new THREE.Vector3(0, 3, 0))
+cubeMesh3.position.copy(new THREE.Vector3(0, 0, 4))
+
+const axesHelper = new THREE.AxesHelper(4)
+scene.add(axesHelper)
 
 // Initializing the camera
 const camera = new THREE.PerspectiveCamera(
@@ -38,9 +55,10 @@ const camera = new THREE.PerspectiveCamera(
 // )
 
 // Position the camera
-camera.position.z = 5
+camera.position.z = 10
 scene.add(camera);
 
+console.log(cubeMesh.position.distanceTo(camera.position))
 
 // Initialize the renderer
 const canvas = document.querySelector('.three-js');
