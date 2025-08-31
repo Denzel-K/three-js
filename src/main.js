@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+// Aspect ratio
+const aspectRatio = window.innerWidth / window.innerHeight
+
 // Scene initialization
 const scene = new THREE.Scene();
 
@@ -14,19 +17,28 @@ const cubeMesh = new THREE.Mesh(
 );
 scene.add(cubeMesh);
 
-console.log(scene);
+//console.log(scene);
 
 
 // Initializing the camera
 const camera = new THREE.PerspectiveCamera(
   75, 
-  window.innerWidth / window.innerHeight,
+  aspectRatio,
   0.1,
   200
 );
 
+// const camera = new THREE.OrthographicCamera(
+//   -1 * aspectRatio,
+//   1 * aspectRatio,
+//   1,
+//   -1,
+//   0.1,
+//   200
+// )
+
 // Position the camera
-camera.position.z = 10
+camera.position.z = 5
 scene.add(camera);
 
 
@@ -38,15 +50,27 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+
+
 // Instantiate the controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true
 controls.autoRotate = true
 
+
+window.addEventListener('resize', () => {
+  // console.log(`Window resized. Aspect ratio = ${window.innerWidth / window.innerHeight}`);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix;
+  renderer.setSize(window.innerWidth, window.innerHeight);
+})
+
+
+// Render the scene
 const renderLoop = () => {
-  controls.update()
- renderer.render(scene, camera);
- window.requestAnimationFrame(renderLoop)
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(renderLoop)
+  controls.update();
 }
 
 
