@@ -46,11 +46,14 @@ scene.add(camera);
 const canvas = document.querySelector('.three-js');
 
 const renderer = new THREE.WebGLRenderer({
-  canvas: canvas
+  canvas: canvas,
+  antialias: true // Software based antialiasing
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-
+// Hardware based antialiasing
+const maxPixelRatio = Math.min(window.devicePixelRatio, 2);
+renderer.setPixelRatio(maxPixelRatio);
 
 // Instantiate the controls
 const controls = new OrbitControls(camera, canvas);
