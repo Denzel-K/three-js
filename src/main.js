@@ -41,7 +41,7 @@ scene.add(axesHelper)
 const camera = new THREE.PerspectiveCamera(
   75, 
   aspectRatio,
-  0.1,
+  0.5,
   200
 );
 
